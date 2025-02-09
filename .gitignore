@@ -1,0 +1,7 @@
+*.log
+myenv/
+*.pyc
+__pycache__/
+.idea/
+.ipnyb_checkpoints/
+.vscode/
