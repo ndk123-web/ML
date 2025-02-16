@@ -13,6 +13,8 @@ emails = pd.read_csv('messages.csv')
 x = emails['message']
 y = emails['label']
 
+print(type(x))
+
 ''' ( TfidfVectorizer )
     - It's Conversion of Text to Numerical list 
     - Ex : 'hello i am ndk' , 'bro how r u' -> 

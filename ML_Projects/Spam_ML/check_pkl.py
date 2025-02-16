@@ -2,9 +2,20 @@ import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.feature_extraction.text import TfidfVectorizer
+import os 
+import sys
 
-model_logistic = joblib.load('Logistic_Model.pkl')
-vectorizer = joblib.load('Tfidvector.pkl')
+
+''' 
+    Dynamic Path for Models weights and Vectorizer
+'''
+model_path_logistic = os.path.join(f"C:/Users/Navnath/OneDrive/Desktop/ML/ML_Projects/Spam_ML" , 'Logistic_Model.pkl')
+model_path_multibay = os.path.join(f"C:/Users/Navnath/OneDrive/Desktop/ML/ML_Projects/Spam_ML", 'MultiBay_Model.pkl')
+vectorizer_path =  os.path.join(f"C:/Users/Navnath/OneDrive/Desktop/ML/ML_Projects/Spam_ML", 'Tfidvector.pkl')
+
+model_logistic = joblib.load(model_path_logistic)
+model_MultiBay = joblib.load(model_path_multibay)
+vectorizer = joblib.load(vectorizer_path)
 
 inp = [
     "Congratulations! You have won a free iPhone. Click the link to claim now.",  # Spam (1)
@@ -21,7 +32,16 @@ inp = [
 labels = [1, 0, 1, 1, 0, 1, 0, 1, 0, 0]
 # extern [1  0  1  1  0  0  0  1  0  0]     # loading and working fine
 
-inp = vectorizer.transform(inp).toarray()
-
-y_pred = model_logistic.predict(inp)
-print(y_pred)
+inp = vectorizer.transform(inp).toarray()   
+     
+if len(sys.argv) > 1:
+    model = sys.argv[1]
+    if model == 'model1':
+        y_pred_logistic = model_logistic.predict(inp)
+        print("Logistic : ",y_pred_logistic)
+    elif model == 'model2':
+        y_pred_multibay = model_MultiBay.predict(inp)
+        print("MultiBay",y_pred_multibay)
+    else:
+        print("invalid model")
+        print('Did u mean ? "model1" or "model2" ')
